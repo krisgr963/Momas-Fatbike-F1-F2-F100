@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momas Fatbike F1: Guide til bytte av girøre</title>
+<style>
+/* ============================================================
+   GENERELL STIL – Mørkt verksted-tema
+   ============================================================ */
+:root {
+  --bg-darkest: #111827;
+  --bg-dark: #1f2937;
+  --bg-card: #252f3f;
+  --bg-card-hover: #2d3950;
+  --accent-orange: #f59e0b;
+  --accent-orange-dim: #b8770a;
+  --accent-yellow: #fbbf24;
+  --accent-blue: #3b82f6;
+  --accent-blue-dim: #2563eb;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border: #374151;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg-darkest);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  border-bottom: 3px solid var(--accent-orange);
+  padding: 2rem 1.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.header-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+header h1 {
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--accent-orange);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+header h1 .bike-icon {
+  flex-shrink: 0;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Advarsel-boks */
+.warning-box {
+  background: rgba(245,158,11,0.12);
+  border: 1px solid var(--accent-orange);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-size: 0.92rem;
+}
+
+.warning-box svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.warning-box strong { color: var(--accent-yellow); }
+
+/* ============================================================
+   HOVEDINNHOLD
+   ============================================================ */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 0;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+section > h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ============================================================
+   VERKTØYLISTE
+   ============================================================ */
+.tool-list {
+  background: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+}
+
+.tool-list p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.8rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+  user-select: none;
+}
+
+.tool-item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-orange-dim);
+  transform: translateX(3px);
+}
+
+.tool-item:last-child { margin-bottom: 0; }
+
+.tool-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg-darkest);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.tool-item.checked .tool-checkbox {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.tool-checkbox svg {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tool-item.checked .tool-checkbox svg { opacity: 1; }
+
+.tool-item.checked .tool-label {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.tool-label { font-size: 0.95rem; }
+
+.tool-progress {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+/* ============================================================
+   FREMDRIFTSLINJE
+   ============================================================ */
+.progress-section {
+  background: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.progress-percent {
+  font-weight: 700;
+  color: var(--accent-orange);
+  font-size: 1rem;
+}
+
+.progress-bar-bg {
+  height: 10px;
+  background: var(--bg-darkest);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow));
+  border-radius: 6px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(245,158,11,0.4);
+}
+
+/* ============================================================
+   TRINN-KORT
+   ============================================================ */
+.step-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.step-card.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-header {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+  padding: 1.2rem 1.5rem;
+  border-bottom: 2px solid var(--accent-orange);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.step-number-badge {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-orange);
+  color: var(--bg-darkest);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(245,158,11,0.3);
+}
+
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.step-body {
+  padding: 1.5rem;
+}
+
+/* SVG-illustrasjon beholdere */
+.step-illustration {
+  background: var(--bg-darkest);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.step-illustration svg {
+  max-width: 100%;
+  height: auto;
+  max-height: 220px;
+}
+
+.step-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.step-description ul {
+  list-style: none;
+  margin-top: 0.6rem;
+}
+
+.step-description ul li {
+  padding-left: 1.4rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+
+.step-description ul li::before {
+  content: '▸';
+  color: var(--accent-orange);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Fullført-knapp */
+.complete-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.7rem 1.2rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  justify-content: center;
+}
+
+.complete-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--success);
+  color: var(--text-primary);
+}
+
+.complete-btn.done {
+  background: rgba(16,185,129,0.15);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.complete-btn.done .check-icon { display: flex; }
+.complete-btn .check-icon { display: none; }
+.complete-btn .circle-icon { display: flex; }
+.complete-btn.done .circle-icon { display: none; }
+
+/* ============================================================
+   NAVIGASJON
+   ============================================================ */
+.nav-buttons {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  justify-content: space-between;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: var(--accent-blue-dim);
+  border-color: var(--accent-blue);
+  color: white;
+}
+
+.nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.nav-btn.next-btn {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: white;
+}
+
+.nav-btn.next-btn:hover:not(:disabled) {
+  background: var(--accent-blue-dim);
+}
+
+/* ============================================================
+   STEG-INDIKATOR (prikker)
+   ============================================================ */
+.step-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.step-dot {
+  width: 28px;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.step-dot:hover { background: var(--text-muted); }
+.step-dot.active { background: var(--accent-blue); width: 36px; }
+.step-dot.completed { background: var(--success); }
+
+/* ============================================================
+   TIPS-BOKS (etterjustering)
+   ============================================================ */
+.tips-box {
+  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(59,130,246,0.03));
+  border: 1px solid var(--accent-blue);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.tips-box h3 {
+  color: var(--accent-blue);
+  font-size: 1.05rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tips-box p {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin-bottom: 0.7rem;
+}
+
+.tips-box ul {
+  list-style: none;
+}
+
+.tips-box ul li {
+  padding-left: 1.4rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.tips-box ul li::before {
+  content: '🔧';
+  position: absolute;
+  left: 0;
+}
+
+.tips-box .highlight {
+  color: var(--accent-yellow);
+  font-weight: 600;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  padding: 2rem 1rem 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+footer p { margin-bottom: 0.3rem; }
+
+/* ============================================================
+   RESPONSIVE JUSTERINGER
+   ============================================================ */
+@media (max-width: 520px) {
+  header { padding: 1.5rem 1rem 1rem; }
+  .step-header { padding: 1rem; gap: 0.7rem; }
+  .step-number-badge { width: 36px; height: 36px; font-size: 1.1rem; }
+  .step-title { font-size: 1rem; }
+  .step-body { padding: 1rem; }
+  .progress-section { padding: 1rem; }
+  .nav-btn { padding: 0.7rem 0.8rem; font-size: 0.88rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header>
+  <div class="header-inner">
+    <h1>
+      <svg class="bike-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="5.5" cy="17.5" r="3.5"/>
+        <circle cx="18.5" cy="17.5" r="3.5"/>
+        <path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5V14l-3-3 4-3 2 3h2"/>
+      </svg>
+      Momas Fatbike F1: Guide til bytte av girøre
+    </h1>
+    <p class="subtitle">F1000 / F2 med bakhjulsmotor – trinn-for-trinn veiledning</p>
+
+    <div class="warning-box">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <div>
+        <strong>Advarsel:</strong> Vær ekstremt forsiktig med motorledningen på bakhjulsmotoren. Ledningen har en skjøtende hurtigkobling som må kobles fra/til riktig – feil håndtering kan skade kontakten eller motorstyringen.
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ========================================================
+       FREMDRIFTSLINJE
+       ======================================================== -->
+  <div class="progress-section">
+    <div class="progress-label">
+      <span>Fullført: <span id="completedCount">0</span> / 8 trinn</span>
+      <span class="progress-percent" id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       VERKTØYLISTE
+       ======================================================== -->
+  <section>
+    <h2>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+      Verktøyliste
+    </h2>
+    <div class="tool-list">
+      <p>Kryss av etter hvert som du har funnet frem verktøyet. Slik er du sikker på å ha alt klart før du starter.</p>
+
+      <div class="tool-item" data-tool="0">
+        <div class="tool-checkbox">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <span class="tool-label">Unbrakonøkkel 5 mm (og mindre)</span>
+      </div>
+
+      <div class="tool-item" data-tool="1">
+        <div class="tool-checkbox">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <span class="tool-label">Fastnøkkel / skiftenøkkel til hjulmuttere</span>
+      </div>
+
+      <div class="tool-item" data-tool="2">
+        <div class="tool-checkbox">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <span class="tool-label">Nytt girøre (original eller tilsvarende)</span>
+      </div>
+
+      <div class="tool-progress" id="toolProgress">0 / 3 verktøy funnet</div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       TRINN-FOR-TRINN GUIDE
+       ======================================================== -->
+  <section>
+    <h2>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 11l3 3L22 4"/>
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+      </svg>
+      Trinn-for-trinn guide
+    </h2>
+
+    <!-- STEG 1: Gir ned på minste tannhjul -->
+    <div class="step-card active" data-step="0">
+      <div class="step-header">
+        <div class="step-number-badge">1</div>
+        <div class="step-title">Gir ned på minste tannhjul</div>
+      </div>
+      <div class="step-body">
+        <div class="step-illustration">
+          <!-- SVG: Kjedet på minste krans -->
+          <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Baknav med kassettkranser -->
+            <circle cx="240" cy="100" r="70" fill="none" stroke="#374151" stroke-width="2"/>
+            <!-- Kranser (stigende størrelse innover) -->
+            <circle cx="240" cy="100" r="55" fill="none" stroke="#6b7280" stroke-width="3"/>
+            <circle cx="240" cy="100" r="45" fill="none" stroke="#6b7280" stroke-width="3"/>
+            <circle cx="240" cy="100" r="36" fill="none" stroke="#6b7280" stroke-width="3"/>
+            <circle cx="240" cy="100" r="28" fill="none" stroke="#6b7280" stroke-width="3"/>
+            <!-- Minste krans (markert oransje) -->
+            <circle cx="240" cy="100" r="20" fill="none" stroke="#f59e0b" stroke-width="4"/>
+            <!-- Kjede -->
+            <path d="M 90 90 Q 165 85 220 95" fill="none" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 90 110 Q 165 115 220 105" fill="none" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/>
+            <!-- Foriring (krank) -->
+            <circle cx="90" cy="100" r="28" fill="none" stroke="#6b7280" stroke-width="3"/>
+            <circle cx="90" cy="100" r="6" fill="#374151"/>
+            <!-- Peker mot minste krans -->
+            <line x1="295" y1="100" x2="268" y2="100" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="268,100 274,96 274,104" fill="#f59e0b"/>
+            <text x="160" y="180" text-anchor="middle" fill="#fbbf24" font-size="12" font-family="sans-serif">Kjede på minste krans</text>
+          </svg>
+        </div>
+        <div class="step-description">
+          Skift til det minste tannhjulet (minste krans) på baknavet. Dette slakker kjedet og gir maksimal slack på vaieren, noe som gjør avmontering av bakhjulet mye enklere.
+          <ul>
+            <li>Vri girspaken helt inn til kjedet ligger på den minste kransen</li>
+            <li>Sjekk at kjedet ligger pent på plass – ikke skjevt</li>
+          </ul>
+        </div>
+        <button class="complete-btn" data-step-btn="0">
+          <span class="circle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="check-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="btn-text">Merk som fullført</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEG 2: Koble fra motorledningen -->
+    <div class="step-card" data-step="1">
+      <div class="step-header">
+        <div class="step-number-badge">2</div>
+        <div class="step-title">Koble fra motorledningens hurtigkobling</div>
+      </div>
+      <div class="step-body">
+        <div class="step-illustration">
+          <!-- SVG: Hurtigkobling med piler -->
+          <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Venstre plugg -->
+            <rect x="60" y="70" width="70" height="60" rx="6" fill="#252f3f" stroke="#6b7280" stroke-width="2"/>
+            <circle cx="75" cy="85" r="3" fill="#f59e0b"/>
+            <circle cx="75" cy="100" r="3" fill="#f59e0b"/>
+            <circle cx="75" cy="115" r="3" fill="#f59e0b"/>
+            <!-- Høyre plugg -->
+            <rect x="190" y="70" width="70" height="60" rx="6" fill="#252f3f" stroke="#6b7280" stroke-width="2"/>
+            <!-- Ledninger -->
+            <path d="M 130 80 Q 150 75 190 80" fill="none" stroke="#3b82f6" stroke-width="3"/>
+            <path d="M 130 100 L 190 100" fill="none" stroke="#10b981" stroke-width="3"/>
+            <path d="M 130 120 Q 150 125 190 120" fill="none" stroke="#ef4444" stroke-width="3"/>
+            <path d="M 60 85 Q 40 85 30 75" fill="none" stroke="#374151" stroke-width="4"/>
+            <path d="M 60 100 Q 35 100 25 100" fill="none" stroke="#374151" stroke-width="4"/>
+            <path d="M 60 115 Q 40 115 30 125" fill="none" stroke="#374151" stroke-width="4"/>
+            <!-- Piler: dra fra hverandre -->
+            <g>
+              <line x1="150" y1="50" x2="120" y2="50" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+              <polygon points="120,50 128,46 128,54" fill="#f59e0b"/>
+              <line x1="170" y1="50" x2="200" y2="50" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+              <polygon points="200,50 192,46 192,54" fill="#f59e0b"/>
+            </g>
+            <text x="160" y="40" text-anchor="middle" fill="#fbbf24" font-size="11" font-family="sans-serif">Trekk fra hverandre</text>
+            <text x="160" y="170" text-anchor="middle" fill="#9ca3af" font-size="11" font-family="sans-serif">Hurtigkobling for motorledning</text>
+          </svg>
+        </div>
+        <div class="step-description">
+          Finn hurtigkoblingen på motorledningen (vanligvis en liten plugg med låsefeste nær baknavet). Koble den fra forsiktig før du tar ut hjulet.
+          <ul>
+            <li>Hold i selve kontakten, IKKE dra i ledningen</li>
+            <li>Merk eventuelt merking/piler som viser rett monteringsretning</li>
+            <li>Legg ledningen slik at den ikke henger i eller blir klemt</li>
+          </ul>
+        </div>
+        <button class="complete-btn" data-step-btn="1">
+          <span class="circle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="check-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="btn-text">Merk som fullført</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEG 3: Løsne bakgiret -->
+    <div class="step-card" data-step="2">
+      <div class="step-header">
+        <div class="step-number-badge">3</div>
+        <div class="step-title">Løsne bakgiret og la det henge i vaieren</div>
+      </div>
+      <div class="step-body">
+        <div class="step-illustration">
+          <!-- SVG: Bakgir hengende i vaier -->
+          <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Rammeøvre (rest av ramme) -->
+            <rect x="50" y="20" width="30" height="60" rx="4" fill="#374151"/>
+            <!-- Vaier fra ramme ned -->
+            <path d="M 65 80 Q 80 110 95 140" fill="none" stroke="#9ca3af" stroke-width="2"/>
+            <!-- Bakgir-kropp -->
+            <g transform="translate(90,135)">
+              <rect x="0" y="0" width="45" height="35" rx="5" fill="#252f3f" stroke="#f59e0b" stroke-width="2"/>
+              <!-- Øvre ledd -->
+              <circle cx="10" cy="8" r="5" fill="#374151" stroke="#6b7280" stroke-width="1.5"/>
+              <!-- Bakgir-ledd (parallellfjør) -->
+              <line x1="10" y1="14" x2="35" y2="45" stroke="#6b7280" stroke-width="2"/>
+              <line x1="20" y1="14" x2="40" y2="40" stroke="#6b7280" stroke-width="2"/>
+              <!-- Nokkel-skruemerket -->
+              <rect x="15" y="10" width="20" height="6" rx="2" fill="#f59e0b" opacity="0.6"/>
+            </g>
+            <!-- Peker "hengende" -->
+            <text x="180" y="150" fill="#fbbf24" font-size="11" font-family="sans-serif">Henger i vaieren</text>
+            <line x1="170" y1="145" x2="140" y2="150" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <!-- Unbrako-symbol -->
+            <g transform="translate(220,120)">
+              <path d="M -8 -8 L 8 8 M -8 8 L 8 -8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+              <circle r="12" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="2,2"/>
+            </g>
+            <text x="220" y="100" text-anchor="middle" fill="#9ca3af" font-size="10" font-family="sans-serif">Unbrako 5 mm</text>
+          </svg>
+        </div>
+        <div class="step-description">
+          Skru løs bakgiret fra girøret med unbrakonøkkel (ofte 5 mm). La giret henge forsiktig i vaieren – ikke la det belastes for mye.
+          <ul>
+            <li>Løsne skruen som fester bakgiret til girøret</li>
+            <li>Støtt giret med en hånd slik at vaieren ikke bøyes</li>
+            <li>Legg giret forskelig til side eller bind det opp med en strikk</li>
+          </ul>
+        </div>
+        <button class="complete-btn" data-step-btn="2">
+          <span class="circle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="check-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="btn-text">Merk som fullført</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEG 4: Ta av bakhjulet -->
+    <div class="step-card" data-step="3">
+      <div class="step-header">
+        <div class="step-number-badge">4</div>
+        <div class="step-title">Ta av bakhjulet – hold kontroll på stoppskiver/aksel-skiver</div>
+      </div>
+      <div class="step-body">
+        <div class="step-illustration">
+          <!-- SVG: Hjulaksel med skiver -->
+          <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Aksel -->
+            <rect x="40" y="95" width="240" height="10" rx="3" fill="#6b7280"/>
+            <!-- Hjul/nav -->
+            <circle cx="160" cy="100" r="55" fill="none" stroke="#374151" stroke-width="3"/>
+            <circle cx="160" cy="100" r="40" fill="#1f2937" stroke="#4b5563" stroke-width="2"/>
+            <circle cx="160" cy="100" r="10" fill="#374151"/>
+            <!-- Spaker/mutter venstre -->
+            <rect x="30" y="85" width="15" height="30" rx="2" fill="#252f3f" stroke="#f59e0b" stroke-width="1.5"/>
+            <!-- Spaker/mutter høyre -->
+            <rect x="275" y="85" width="15" height="30" rx="2" fill="#252f3f" stroke="#f59e0b" stroke-width="1.5"/>
+            <!-- Aksel-skiver (oransje markert) -->
+            <rect x="50" y="85" width="8" height="30" rx="1" fill="#f59e0b"/>
+            <rect x="262" y="85" width="8" height="30" rx="1" fill="#f59e0b"/>
+            <!-- Peker mot skiver -->
+            <text x="55" y="75" text-anchor="middle" fill="#fbbf24" font-size="10" font-family="sans-serif">Skive</text>
+            <text x="266" y="75" text-anchor="middle" fill="#fbbf24" font-size="10" font-family="sans-serif">Skive</text>
+            <!-- Peker mot mutter -->
+            <text x="38" y="135" text-anchor="middle" fill="#3b82f6" font-size="10" font-family="sans-serif">Mutter</text>
+            <text x="282" y="135" text-anchor="middle" fill="#3b82f6" font-size="10" font-family="sans-serif">Mutter</text>
+            <text x="160" y="180" text-anchor="middle" fill="#9ca3af" font-size="11" font-family="sans-serif">Husk rekkefølgen på skiver og muttere!</text>
+          </svg>
+        </div>
+        <div class="step-description">
+          Løsne hjulmutterne med fastnøkkel/skiftenøkkel og trekk ut akselen. Legg ekstra merke til stoppskivene/aksel-skivene – de må tilbake i riktig rekkefølge.
+          <ul>
+            <li>Løsne mutterne på begge sider</li>
+            <li>Trekk akselen ut og fjern skivene én for én</li>
+            <li>Legg skivene i rekkefølge på et bord eller i en skål</li>
+            <li>Pass på at bremseskiven ikke berører kaliperen ved uttrekk</li>
+          </ul>
+        </div>
+        <button class="complete-btn" data-step-btn="3">
+          <span class="circle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="check-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="btn-text">Merk som fullført</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEG 5: Skift ut girøret -->
+    <div class="step-card" data-step="4">
+      <div class="step-header">
+        <div class="step-number-badge">5</div>
+        <div class="step-title">Skift ut girøret og rengjør rammefestet</div>
+      </div>
+      <div class="step-body">
+        <div class="step-illustration">
+          <!-- SVG: Girøre – gammelt vs nytt -->
+          <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Gammelt girøre (venstre, markert med X) -->
+            <g transform="translate(60,100)">
+              <rect x="-20" y="-40" width="40" height="80" rx="4" fill="#252f3f" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3"/>
+              <circle cx="0" cy="-30" r="5" fill="#374151"/>
+              <text x="0" y="60" text-anchor="middle" fill="#ef4444" font-size="11" font-family="sans-serif">Gammelt</text>
+              <!-- X -->
+              <line x1="-15" y1="-35" x2="15" y2="35" stroke="#ef4444" stroke-width="2"/>
+              <line x1="15" y1="-35" x2="-15" y2="35" stroke="#ef4444" stroke-width="2"/>
+            </g>
+            <!-- Pil mellom -->
+            <line x1="110" y1="100" x2="210" y2="100" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+            <polygon points="210,100 200,94 200,106" fill="#f59e0b"/>
+            <!-- Nytt girøre (høyre, markert med sjekk) -->
+            <g transform="translate(260,100)">
+              <rect x="-20" y="-40" width="40" height="80" rx="4" fill="#252f3f" stroke="#10b981" stroke-width="2"/>
+              <circle cx="0" cy="-30" r="5" fill="#374151"/>
+              <circle cx="0" cy="30" r="5" fill="#374151"/>
+              <text x="0" y="60" text-anchor="middle" fill="#10b981" font-size="11" font-family="sans-serif">Nytt</text>
+              <!-- Sjekk -->
+              <polyline points="-12,-5 -2,8 12,-15" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <text x="160" y="30" text-anchor="middle" fill="#fbbf24" font-size="12" font-family="sans-serif">Rengjør før montering</text>
+          </svg>
+        </div>
+        <div class="step-description">
+          Skru av det gamle girøret fra rammen. Rengjør gjenge/feste grundig, og monter det nye girøret.
+          <ul>
+            <li>Løsne skruen som fester girøret til rammen</li>
+            <li>Rengjør festeområdet med en klut – fjern smuss og gammel fett</li>
+            <li>Sett inn det nye girøret og stram skruen moderat (ikke overstram)</li>
+          </ul>
+        </div>
+        <button class="complete-btn" data-step-btn="4">
+          <span class="circle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="check-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="btn-text">Merk som fullført</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEG 6: Monter bakhjulet -->
+    <div class="step-card" data-step="5">
+      <div class="step-header">
+        <div class="step-number-badge">6</div>
+        <div class="step-title">Monter bakhjulet – sjekk bremseskiv i kaliper</div>
+      </div>
+      <div class="step-body">
+        <div class="step-illustration">
+          <!-- SVG: Bakhjul monteres, kaliper/bremseskiv -->
+          <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Hjul -->
+            <circle cx="160" cy="100" r="50" fill="none" stroke="#374151" stroke-width="3"/>
+            <circle cx="160" cy="100" r="35" fill="#1f2937" stroke="#4b5563" stroke-width="2"/>
+            <!-- Bremseskiv (venstre side) -->
+            <circle cx="100" cy="100" r="25" fill="none" stroke="#f59e0b" stroke-width="3"/>
+            <circle cx="100" cy="100" r="22" fill="none" stroke="#b8770a" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- Kaliper -->
+            <g transform="translate(75,75)">
+              <rect x="0" y="0" width="30" height="50" rx="4" fill="#252f3f" stroke="#3b82f6" stroke-width="2"/>
+              <rect x="8" y="15" width="14" height="20" fill="#1f2937"/>
+            </g>
+            <!-- Peker mot kaliper -->
+            <line x1="95" y1="65" x2="100" y2="70" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="2,2"/>
+            <text x="60" y="60" fill="#3b82f6" font-size="10" font-family="sans-serif">Kaliper</text>
+            <text x="110" y="145" fill="#fbbf24" font-size="10" font-family="sans-serif">Bremseskiv</text>
+            <!-- Aksel-skiver tilbake -->
+            <rect x="135" y="85" width="6" height="30" rx="1" fill="#f59e0b"/>
+            <rect x="179" y="85" width="6" height="30" rx="1" fill="#f59e0b"/>
+            <!-- Pil ned (monteres) -->
+            <line x1="160" y1="25" x2="160" y2="45" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+            <polygon points="160,50 155,42 165,42" fill="#10b981"/>
+            <text x="160" y="180" text-anchor="middle" fill="#9ca3af" font-size="11" font-family="sans-serif">Skivene tilbake i riktig rekkefølge</text>
+          </svg>
+        </div>
+        <div class="step-description">
+          Sett bakhjulet tilbake i rammen. Legg skivene tilbake i riktig rekkefølge, og pass på at bremseskiven glir rett inn i kaliperen.
+          <ul>
+            <li>Legg skivene tilbake i speilvendt rekkefølge av uttrekket</li>
+            <li>Sjekk at bremseskiven glir rett mellom klipsene i kaliperen</li>
+            <li>Ikke tving – hvis skiven ikke passer, sjekk at hjulet er rett vendt</li>
+            <li>Stram mutterne jevnt på begge sider</li>
+          </ul>
+        </div>
+        <button class="complete-btn" data-step-btn="5">
+          <span class="circle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="check-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="btn-text">Merk som fullført</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEG 7: Koble til motoren igjen -->
+    <div class="step-card" data-step="6">
+      <div class="step-header">
+        <div class="step-number-badge">7</div>
+        <div class="step-title">Koble til motoren igjen – pass på markeringspiler</div>
+      </div>
+      <div class="step-body">
+        <div class="step-illustration">
+          <!-- SVG: Hurtigkobling med markeringspiler – kobles sammen -->
+          <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Venstre plugg -->
+            <rect x="80" y="70" width="70" height="60" rx="6" fill="#252f3f" stroke="#6b7280" stroke-width="2"/>
+            <circle cx="130" cy="85" r="3" fill="#f59e0b"/>
+            <circle cx="130" cy="100" r="3" fill="#f59e0b"/>
+            <circle cx="130" cy="115" r="3" fill="#f59e0b"/>
+            <!-- Høyre plugg -->
+            <rect x="170" y="70" width="70" height="60" rx="6" fill="#252f3f" stroke="#6b7280" stroke-width="2"/>
+            <!-- Piler som vises sammen (matcher) -->
+            <polygon points="155,75 165,75 160,65" fill="#10b981"/>
+            <polygon points="155,125 165,125 160,135" fill="#10b981"/>
+            <!-- Peker "match" -->
+            <text x="160" y="55" text-anchor="middle" fill="#10b981" font-size="11" font-family="sans-serif">Piler matcher</text>
+            <!-- Ledninger -->
+            <path d="M 80 85 Q 60 85 50 75" fill="none" stroke="#374151" stroke-width="4"/>
+            <path d="M 80 100 Q 55 100 45 100" fill="none" stroke="#374151" stroke-width="4"/>
+            <path d="M 80 115 Q 60 115 50 125" fill="none" stroke="#374151" stroke-width="4"/>
+            <path d="M 240 85 Q 260 85 270 75" fill="none" stroke="#3b82f6" stroke-width="3"/>
+            <path d="M 240 100 Q 265 100 275 100" fill="none" stroke="#10b981" stroke-width="3"/>
+            <path d="M 240 115 Q 260 115 270 125" fill="none" stroke="#ef4444" stroke-width="3"/>
+            <text x="160" y="170" text-anchor="middle" fill="#9ca3af" font-size="11" font-family="sans-serif">Trykk sammen til det klikker</text>
+          </svg>
+        </div>
+        <div class="step-description">
+          Koble motorledningen sammen igjen. Sjekk at markeringspilene på kontakten peker mot hverandre før du trykker sammen.
+          <ul>
+            <li>Rett inn pilene på de to delene av hurtigkoblingen</li>
+            <li>Trykk sammen til du kjenner/ører et klikk</li>
+            <li>Gi ledningen et forsiktig rykk for å bekrefte at den sitter</li>
+          </ul>
+        </div>
+        <button class="complete-btn" data-step-btn="6">
+          <span class="circle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="check-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="btn-text">Merk som fullført</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEG 8: Skru fast bakgiret -->
+    <div class="step-card" data-step="7">
+      <div class="step-header">
+        <div class="step-number-badge">8</div>
+        <div class="step-title">Skru fast bakgiret – sjekk anleggstappen mot stopp</div>
+      </div>
+      <div class="step-body">
+        <div class="step-illustration">
+          <!-- SVG: Bakgir mot girørets stopp -->
+          <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Girøre -->
+            <rect x="50" y="60" width="30" height="90" rx="4" fill="#252f3f" stroke="#6b7280" stroke-width="2"/>
+            <!-- Stopp (markert) -->
+            <rect x="80" y="95" width="10" height="20" fill="#f59e0b"/>
+            <text x="85" y="85" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Stopp</text>
+            <!-- Bakgir-kropp -->
+            <g transform="translate(95,90)">
+              <rect x="0" y="0" width="50" height="40" rx="5" fill="#252f3f" stroke="#3b82f6" stroke-width="2"/>
+              <!-- Anleggstapp -->
+              <rect x="-8" y="8" width="8" height="14" fill="#10b981"/>
+              <text x="-4" y="32" text-anchor="middle" fill="#10b981" font-size="8" font-family="sans-serif">Tapp</text>
+              <!-- Nokkel-symbol -->
+              <circle cx="25" cy="20" r="6" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+            </g>
+            <!-- Peker mot anleggstappen mot stopp -->
+            <line x1="85" y1="105" x2="92" y2="105" stroke="#10b981" stroke-width="2"/>
+            <polygon points="92,105 87,102 87,108" fill="#10b981"/>
+            <!-- Skrue-symbol -->
+            <g transform="translate(200,100)">
+              <circle r="14" fill="none" stroke="#f59e0b" stroke-width="2"/>
+              <circle r="5" fill="#f59e0b" opacity="0.5"/>
+              <line x1="-10" y1="-10" x2="10" y2="10" stroke="#f59e0b" stroke-width="2"/>
+            </g>
+            <text x="200" y="80" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="sans-serif">Stram skruen</text>
+            <text x="160" y="180" text-anchor="middle" fill="#9ca3af" font-size="11" font-family="sans-serif">Anleggstappen skal hvile mot stoppen</text>
+          </svg>
+        </div>
+        <div class="step-description">
+          Monter bakgiret tilbake på det nye girøret. Pass på at anleggstappen på giret hviler mot girørets stopp før du strammer skruen.
+          <ul>
+            <li>Sett anleggstappen mot stoppen på girøret (begrenser vridning)</li>
+            <li>Stram skruen moderat med unbrakonøkkel</li>
+            <li>Sjekk at giret beveger seg fritt og ikke har slark</li>
+            <li>Skift gjennom girene for å bekrefte at alt fungerer</li>
+          </ul>
+        </div>
+        <button class="complete-btn" data-step-btn="7">
+          <span class="circle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="check-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="btn-text">Merk som fullført</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigasjonsknapper -->
+    <div class="nav-buttons">
+      <button class="nav-btn prev-btn" id="prevBtn" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Forrige
+      </button>
+      <button class="nav-btn next-btn" id="nextBtn">
+        Neste
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <!-- Steg-indikatorer (prikker) -->
+    <div class="step-indicators" id="stepIndicators"></div>
+  </section>
+
+  <!-- ========================================================
+       TIPS-BOKS: Etterjustering av gir
+       ======================================================== -->
+  <section>
+    <h2>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+      Tips: Etterjustering av gir
+    </h2>
+    <div class="tips-box">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        Justering med tønneskruen
+      </h3>
+      <p>Siden det nye girøret er helt rett (uten fabrikksatt vinkel), vil du nesten alltid trenge en liten etterjustering av giringen etter montering.</p>
+      <ul>
+        <li>Tønneskruen sitter på bakgiret der vaieren går inn – den justerer vaier-spennet</li>
+        <li><span class="highlight">Hvis giringen sliter med å gå opp til større tannhjul:</span> skru tønneskruen UT (mot klokka) for mer spenn</li>
+        <li><span class="highlight">Hvis giringen sliter med å gå ned til mindre tannhjul:</span> skru tønneskruen INN (med klokka) for mindre spenn</li>
+        <li>Gjør små justeringer – et kvart omdreinning av gangen</li>
+        <li>Sykkel gjennom alle girene og sjekk at kjedet ikke faller av på noen side</li>
+        <li>Hvis giret fortsatt ikke treffer – sjekk at anleggstappen virkelig hviler mot stoppen (se steg 8)</li>
+      </ul>
+      <p style="margin-top: 0.8rem; font-size: 0.85rem; color: var(--text-muted);">Et nytt girøre kan også trenge at du sjekker B-skruen (justerer avstand til største krans) og H/L-skruene på bakgiret for finjustering.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Momas Fatbike F1 (F1000 / F2) – Guide for bytte av girøre</p>
+  <p>Denne veiledningen er generell. Se brukermanualen for spesifikke detaljer for din modell.</p>
+</footer>
+
+<script>
+/* ============================================================
+   JAVASCRIPT – Interaktiv logikk
+   ============================================================ */
+
+// --- Tilstand ---
+var currentStep = 0;
+var totalSteps = 8;
+var completedSteps = [false, false, false, false, false, false, false, false];
+var toolState = [false, false, false];
+
+// --- DOM-referanser ---
+var stepCards = document.querySelectorAll('.step-card');
+var completeBtns = document.querySelectorAll('.complete-btn');
+var prevBtn = document.getElementById('prevBtn');
+var nextBtn = document.getElementById('nextBtn');
+var progressFill = document.getElementById('progressFill');
+var progressPercent = document.getElementById('progressPercent');
+var completedCountEl = document.getElementById('completedCount');
+var stepIndicators = document.getElementById('stepIndicators');
+var toolItems = document.querySelectorAll('.tool-item');
+var toolProgress = document.getElementById('toolProgress');
+
+/* --- Initialiser steg-indikatorer (prikker) --- */
+function initStepIndicators() {
+  for (var i = 0; i < totalSteps; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'step-dot';
+    if (i === 0) dot.classList.add('active');
+    dot.setAttribute('data-dot', i);
+    dot.addEventListener('click', function(e) {
+      var idx = parseInt(e.currentTarget.getAttribute('data-dot'));
+      goToStep(idx);
+    });
+    stepIndicators.appendChild(dot);
+  }
+}
+
+/* --- Vis et bestemt steg --- */
+function goToStep(index) {
+  if (index < 0 || index >= totalSteps) return;
+  // Skjul alle, vis valgt
+  stepCards.forEach(function(card) { card.classList.remove('active'); });
+  stepCards[index].classList.add('active');
+  currentStep = index;
+  updateNavButtons();
+  updateIndicators();
+}
+
+/* --- Oppdater navigasjonsknapper --- */
+function updateNavButtons() {
+  prevBtn.disabled = (currentStep === 0);
+  if (currentStep === totalSteps - 1) {
+    nextBtn.disabled = true;
+    nextBtn.innerHTML = 'Fullført';
+  } else {
+    nextBtn.disabled = false;
+    nextBtn.innerHTML = 'Neste <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+  }
+}
+
+/* --- Oppdater steg-indikatorer --- */
+function updateIndicators() {
+  var dots = stepIndicators.querySelectorAll('.step-dot');
+  dots.forEach(function(dot, i) {
+    dot.classList.remove('active', 'completed');
+    if (i === currentStep) dot.classList.add('active');
+    if (completedSteps[i]) dot.classList.add('completed');
+  });
+}
+
+/* --- Oppdater fremdriftslinje --- */
+function updateProgress() {
+  var count = completedSteps.filter(function(s) { return s; }).length;
+  var pct = Math.round((count / totalSteps) * 100);
+  progressFill.style.width = pct + '%';
+  progressPercent.textContent = pct + '%';
+  completedCountEl.textContent = count;
+}
+
+/* --- Merk et steg som fullført / ikke fullført --- */
+function toggleComplete(stepIndex) {
+  completedSteps[stepIndex] = !completedSteps[stepIndex];
+  var btn = document.querySelector('[data-step-btn="' + stepIndex + '"]');
+  if (completedSteps[stepIndex]) {
+    btn.classList.add('done');
+    btn.querySelector('.btn-text').textContent = 'Fullført ✓';
+  } else {
+    btn.classList.remove('done');
+    btn.querySelector('.btn-text').textContent = 'Merk som fullført';
+  }
+  updateProgress();
+  updateIndicators();
+}
+
+/* --- Verktøy-sjekkliste --- */
+function toggleTool(index) {
+  toolState[index] = !toolState[index];
+  var item = document.querySelector('[data-tool="' + index + '"]');
+  if (toolState[index]) {
+    item.classList.add('checked');
+  } else {
+    item.classList.remove('checked');
+  }
+  var count = toolState.filter(function(t) { return t; }).length;
+  toolProgress.textContent = count + ' / 3 verktøy funnet';
+}
+
+/* --- Hendelser --- */
+prevBtn.addEventListener('click', function() {
+  if (currentStep > 0) goToStep(currentStep - 1);
+});
+
+nextBtn.addEventListener('click', function() {
+  if (currentStep < totalSteps - 1) goToStep(currentStep + 1);
+});
+
+completeBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var idx = parseInt(btn.getAttribute('data-step-btn'));
+    toggleComplete(idx);
+  });
+});
+
+toolItems.forEach(function(item) {
+  item.addEventListener('click', function() {
+    var idx = parseInt(item.getAttribute('data-tool'));
+    toggleTool(idx);
+  });
+});
+
+/* --- Tastaturnavigasjon (piltaster) --- */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' && currentStep < totalSteps - 1) goToStep(currentStep + 1);
+  if (e.key === 'ArrowLeft' && currentStep > 0) goToStep(currentStep - 1);
+});
+
+/* --- Init --- */
+initStepIndicators();
+updateNavButtons();
+updateProgress();
+</script>
+
+</body>
+</html>
